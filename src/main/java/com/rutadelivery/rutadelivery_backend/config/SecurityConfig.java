@@ -24,38 +24,28 @@ public class SecurityConfig {
                                 SessionCreationPolicy.STATELESS
                         )
                 )
-
                 .cors(Customizer.withDefaults())
-
-                .csrf(csrf ->
-                        csrf.disable()
-                )
-
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth ->
                         auth
-
-                                /*
-                                 * Estos tres endpoints son públicos.
-                                 * Todavía no existe JWT de RutaDelivery.
-                                 */
                                 .requestMatchers(
                                         HttpMethod.POST,
                                         "/api/auth/login",
                                         "/api/auth/registro",
-                                        "/api/auth/google"
+                                        "/api/auth/google",
+                                        "/api/auth/recuperacion/solicitar",
+                                        "/api/auth/recuperacion/verificar",
+                                        "/api/auth/recuperacion/restablecer"
                                 )
                                 .permitAll()
-
                                 .requestMatchers(
                                         HttpMethod.OPTIONS,
                                         "/**"
                                 )
                                 .permitAll()
-
                                 .anyRequest()
                                 .authenticated()
                 )
-
                 .oauth2ResourceServer(oauth2 ->
                         oauth2.jwt(
                                 Customizer.withDefaults()
